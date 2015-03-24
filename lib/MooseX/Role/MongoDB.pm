@@ -4,12 +4,14 @@ use warnings;
 
 package MooseX::Role::MongoDB;
 # ABSTRACT: Provide MongoDB connections, databases and collections
-our $VERSION = '0.007'; # VERSION
+
+our $VERSION = '0.008';
 
 use Moose::Role 2;
 use MooseX::AttributeShortcuts;
 
 use Carp ();
+use MongoDB;
 use MongoDB::MongoClient 0.702;
 use Socket 1.96 qw/:addrinfo SOCK_RAW/; # IPv6 capable
 use String::Flogger qw/flog/;
@@ -21,14 +23,14 @@ use namespace::autoclean;
 # Dependencies
 #--------------------------------------------------------------------------#
 
-# =requires _logger
-#
-# You must provide a private method that returns a logging object.  It must
-# implement at least the C<info> and C<debug> methods.  L<MooseX::Role::Logger>
-# version 0.002 or later is recommended, but other logging roles may be
-# sufficient.
-#
-# =cut
+#pod =requires _logger
+#pod
+#pod You must provide a private method that returns a logging object.  It must
+#pod implement at least the C<info> and C<debug> methods.  L<MooseX::Role::Logger>
+#pod version 0.002 or later is recommended, but other logging roles may be
+#pod sufficient.
+#pod
+#pod =cut
 
 requires '_logger';
 
@@ -105,14 +107,14 @@ sub _build__mongo_collection_cache { return {} }
 # Role methods
 #--------------------------------------------------------------------------#
 
-# =method _mongo_database
-#
-#     $obj->_mongo_database( $database_name );
-#
-# Returns a L<MongoDB::Database>.  The argument is the database name.
-# With no argument, the default database name is used.
-#
-# =cut
+#pod =method _mongo_database
+#pod
+#pod     $obj->_mongo_database( $database_name );
+#pod
+#pod Returns a L<MongoDB::Database>.  The argument is the database name.
+#pod With no argument, the default database name is used.
+#pod
+#pod =cut
 
 sub _mongo_database {
     state $check = compile( Object, Optional [Str] );
@@ -124,16 +126,16 @@ sub _mongo_database {
       $self->_mongo_client->get_database($database);
 }
 
-# =method _mongo_collection
-#
-#     $obj->_mongo_collection( $database_name, $collection_name );
-#     $obj->_mongo_collection( $collection_name );
-#
-# Returns a L<MongoDB::Collection>.  With two arguments, the first argument is
-# the database name and the second is the collection name.  With a single
-# argument, the argument is the collection name from the default database name.
-#
-# =cut
+#pod =method _mongo_collection
+#pod
+#pod     $obj->_mongo_collection( $database_name, $collection_name );
+#pod     $obj->_mongo_collection( $collection_name );
+#pod
+#pod Returns a L<MongoDB::Collection>.  With two arguments, the first argument is
+#pod the database name and the second is the collection name.  With a single
+#pod argument, the argument is the collection name from the default database name.
+#pod
+#pod =cut
 
 sub _mongo_collection {
     state $check = compile( Object, Str, Optional [Str] );
@@ -146,14 +148,14 @@ sub _mongo_collection {
       $self->_mongo_database($database)->get_collection($collection);
 }
 
-# =method _mongo_clear_caches
-#
-#     $obj->_mongo_clear_caches;
-#
-# Clears the MongoDB client, database and collection caches.  The next
-# request for a database or collection will reconnect to the MongoDB.
-#
-# =cut
+#pod =method _mongo_clear_caches
+#pod
+#pod     $obj->_mongo_clear_caches;
+#pod
+#pod Clears the MongoDB client, database and collection caches.  The next
+#pod request for a database or collection will reconnect to the MongoDB.
+#pod
+#pod =cut
 
 sub _mongo_clear_caches {
     my ($self) = @_;
@@ -171,12 +173,17 @@ sub _mongo_clear_caches {
 sub _mongo_check_connection {
     my ($self) = @_;
 
+    my $mc = $self->_has_mongo_client ? $self->_mongo_client : undef;
+
+    # alpha driver manages forks for us, so we don't need to
+    my $is_alpha = $mc && eval { $mc->VERSION(v0.998.0) };
+
     my $reset_reason;
     if ( $$ != $self->_mongo_pid ) {
-        $reset_reason = "PID change";
+        $reset_reason = "PID change" unless $is_alpha;
         $self->_set__mongo_pid($$);
     }
-    elsif ( $self->_has_mongo_client && !$self->_mongo_client->connected ) {
+    elsif ( !$is_alpha && $mc && !$mc->connected ) {
         $reset_reason = "Not connected";
     }
 
@@ -272,7 +279,7 @@ MooseX::Role::MongoDB - Provide MongoDB connections, databases and collections
 
 =head1 VERSION
 
-version 0.007
+version 0.008
 
 =head1 SYNOPSIS
 
@@ -474,6 +481,12 @@ L<https://github.com/dagolden/MooseX-Role-MongoDB>
 =head1 AUTHOR
 
 David Golden <dagolden@cpan.org>
+
+=head1 CONTRIBUTOR
+
+=for stopwords Alexandr Ciornii
+
+Alexandr Ciornii <alexchorny@gmail.com>
 
 =head1 COPYRIGHT AND LICENSE
 

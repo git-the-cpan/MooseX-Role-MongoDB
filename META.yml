@@ -3,25 +3,25 @@ abstract: 'Provide MongoDB connections, databases and collections'
 author:
   - 'David Golden <dagolden@cpan.org>'
 build_requires:
-  ExtUtils::MakeMaker: 0
-  File::Spec::Functions: 0
-  List::Util: 0
-  Log::Any::Adapter: 0
-  Moose: 0
-  MooseX::Role::Logger: 0.002
-  Parallel::Iterator: 0
-  Test::FailWarnings: 0
-  Test::More: 0.96
-  Test::Requires: 0
-  version: 0
+  ExtUtils::MakeMaker: '0'
+  File::Spec: '0'
+  Log::Any::Adapter: '0'
+  Moose: '0'
+  MooseX::Role::Logger: '0.002'
+  Parallel::Iterator: '0'
+  Test::FailWarnings: '0'
+  Test::More: '0.96'
+  Test::Requires: '0'
+  perl: v5.10.0
 configure_requires:
-  ExtUtils::MakeMaker: 6.17
+  ExtUtils::MakeMaker: '6.17'
+  perl: v5.10.0
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 5.012, CPAN::Meta::Converter version 2.133380'
+generated_by: 'Dist::Zilla version 5.034, CPAN::Meta::Converter version 2.150001'
 license: apache
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
-  version: 1.4
+  version: '1.4'
 name: MooseX-Role-MongoDB
 no_index:
   directory:
@@ -34,23 +34,26 @@ no_index:
 provides:
   MooseX::Role::MongoDB:
     file: lib/MooseX/Role/MongoDB.pm
-    version: 0.007
+    version: '0.008'
 requires:
-  Carp: 0
-  MongoDB::MongoClient: 0.702
-  Moose::Role: 2
-  MooseX::AttributeShortcuts: 0
-  Socket: 1.96
-  String::Flogger: 0
-  Type::Params: 0
-  Types::Standard: 0
-  namespace::autoclean: 0
+  Carp: '0'
+  MongoDB: '0'
+  MongoDB::MongoClient: '0.702'
+  Moose::Role: '2'
+  MooseX::AttributeShortcuts: '0'
+  Socket: '1.96'
+  String::Flogger: '0'
+  Type::Params: '0'
+  Types::Standard: '0'
+  namespace::autoclean: '0'
   perl: v5.10.0
-  strict: 0
-  warnings: 0
+  strict: '0'
+  warnings: '0'
 resources:
   bugtracker: https://github.com/dagolden/MooseX-Role-MongoDB/issues
   homepage: https://github.com/dagolden/MooseX-Role-MongoDB
   repository: https://github.com/dagolden/MooseX-Role-MongoDB.git
-version: 0.007
+version: '0.008'
 x_authority: cpan:DAGOLDEN
+x_contributors:
+  - 'Alexandr Ciornii <alexchorny@gmail.com>'
