@@ -17,7 +17,7 @@ configure_requires:
   ExtUtils::MakeMaker: '6.17'
   perl: v5.10.0
 dynamic_config: 0
-generated_by: 'Dist::Zilla version 5.034, CPAN::Meta::Converter version 2.150001'
+generated_by: 'Dist::Zilla version 5.039, CPAN::Meta::Converter version 2.150005'
 license: apache
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -34,7 +34,7 @@ no_index:
 provides:
   MooseX::Role::MongoDB:
     file: lib/MooseX/Role/MongoDB.pm
-    version: '0.008'
+    version: '0.009'
 requires:
   Carp: '0'
   MongoDB: '0'
@@ -53,7 +53,7 @@ resources:
   bugtracker: https://github.com/dagolden/MooseX-Role-MongoDB/issues
   homepage: https://github.com/dagolden/MooseX-Role-MongoDB
   repository: https://github.com/dagolden/MooseX-Role-MongoDB.git
-version: '0.008'
+version: '0.009'
 x_authority: cpan:DAGOLDEN
 x_contributors:
   - 'Alexandr Ciornii <alexchorny@gmail.com>'

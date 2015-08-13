@@ -4,7 +4,7 @@
       "David Golden <dagolden@cpan.org>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 5.034, CPAN::Meta::Converter version 2.150001",
+   "generated_by" : "Dist::Zilla version 5.039, CPAN::Meta::Converter version 2.150005",
    "license" : [
       "apache_2_0"
    ],
@@ -35,11 +35,14 @@
          "requires" : {
             "Dist::Zilla" : "5",
             "Dist::Zilla::PluginBundle::DAGOLDEN" : "0.072",
+            "English" : "0",
             "File::Spec" : "0",
             "File::Temp" : "0",
             "IO::Handle" : "0",
             "IPC::Open3" : "0",
             "Pod::Coverage::TrustPod" : "0",
+            "Pod::Wordlist" : "0",
+            "Software::License::Apache_2_0" : "0",
             "Test::CPAN::Meta" : "0",
             "Test::More" : "0",
             "Test::Pod" : "1.41",
@@ -86,7 +89,7 @@
    "provides" : {
       "MooseX::Role::MongoDB" : {
          "file" : "lib/MooseX/Role/MongoDB.pm",
-         "version" : "0.008"
+         "version" : "0.009"
       }
    },
    "release_status" : "stable",
@@ -101,7 +104,7 @@
          "web" : "https://github.com/dagolden/MooseX-Role-MongoDB"
       }
    },
-   "version" : "0.008",
+   "version" : "0.009",
    "x_authority" : "cpan:DAGOLDEN",
    "x_contributors" : [
       "Alexandr Ciornii <alexchorny@gmail.com>"

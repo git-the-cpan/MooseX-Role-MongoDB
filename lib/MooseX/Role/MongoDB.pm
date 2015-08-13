@@ -5,7 +5,7 @@ use warnings;
 package MooseX::Role::MongoDB;
 # ABSTRACT: Provide MongoDB connections, databases and collections
 
-our $VERSION = '0.008';
+our $VERSION = '0.009'; # from MooseX-Role-MongoDB-0.009.tar.gz
 
 use Moose::Role 2;
 use MooseX::AttributeShortcuts;
@@ -175,12 +175,12 @@ sub _mongo_check_connection {
 
     my $mc = $self->_has_mongo_client ? $self->_mongo_client : undef;
 
-    # alpha driver manages forks for us, so we don't need to
+    # v1.0.0 alpha and later reconnects after disconnects
     my $is_alpha = $mc && eval { $mc->VERSION(v0.998.0) };
 
     my $reset_reason;
     if ( $$ != $self->_mongo_pid ) {
-        $reset_reason = "PID change" unless $is_alpha;
+        $reset_reason = "PID change";
         $self->_set__mongo_pid($$);
     }
     elsif ( !$is_alpha && $mc && !$mc->connected ) {
@@ -279,7 +279,7 @@ MooseX::Role::MongoDB - Provide MongoDB connections, databases and collections
 
 =head1 VERSION
 
-version 0.008
+version 0.009
 
 =head1 SYNOPSIS
 
